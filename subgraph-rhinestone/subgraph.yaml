@@ -14,38 +14,17 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Attested
-        - ModuleDeployed
-        - ModuleDeployedExternalFactory
         - ModuleRegistration
-        - NewSchemaResolver
+        - Attested
         - Revoked
-        - RevokedOffchain
-        - SchemaRegistered
-        - SchemaResolverRegistered
-        - Timestamped
       abis:
         - name: Registry
           file: ./abis/Registry.json
       eventHandlers:
-        - event: Attested(indexed address,indexed address,bytes32,indexed address)
-          handler: handleAttested
-        - event: ModuleDeployed(indexed address,indexed bytes32,bytes32)
-          handler: handleModuleDeployed
-        - event: ModuleDeployedExternalFactory(indexed address,indexed address,bytes32)
-          handler: handleModuleDeployedExternalFactory
         - event: ModuleRegistration(indexed address,indexed address,bytes32)
           handler: handleModuleRegistration
-        - event: NewSchemaResolver(indexed bytes32,address)
-          handler: handleNewSchemaResolver
+        - event: Attested(indexed address,indexed address,bytes32,indexed address)
+          handler: handleAttested
         - event: Revoked(indexed address,indexed address,indexed bytes32)
           handler: handleRevoked
-        - event: RevokedOffchain(indexed address,indexed bytes32,indexed uint64)
-          handler: handleRevokedOffchain
-        - event: SchemaRegistered(indexed bytes32,address)
-          handler: handleSchemaRegistered
-        - event: SchemaResolverRegistered(indexed bytes32,address)
-          handler: handleSchemaResolverRegistered
-        - event: Timestamped(indexed bytes32,indexed uint64)
-          handler: handleTimestamped
       file: ./src/registry.ts
