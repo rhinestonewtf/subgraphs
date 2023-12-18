@@ -1,0 +1,96 @@
+type Attested @entity(immutable: true) {
+  id: Bytes!
+  subject: Bytes! # address
+  attester: Bytes! # address
+  schema: Bytes! # bytes32
+  dataPointer: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ModuleDeployed @entity(immutable: true) {
+  id: Bytes!
+  implementation: Bytes! # address
+  salt: Bytes! # bytes32
+  resolver: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ModuleDeployedExternalFactory @entity(immutable: true) {
+  id: Bytes!
+  implementation: Bytes! # address
+  factory: Bytes! # address
+  resolver: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ModuleRegistration @entity(immutable: true) {
+  id: Bytes!
+  implementation: Bytes! # address
+  sender: Bytes! # address
+  resolver: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NewSchemaResolver @entity(immutable: true) {
+  id: Bytes!
+  uid: Bytes! # bytes32
+  resolver: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Revoked @entity(immutable: true) {
+  id: Bytes!
+  subject: Bytes! # address
+  revoker: Bytes! # address
+  schema: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RevokedOffchain @entity(immutable: true) {
+  id: Bytes!
+  revoker: Bytes! # address
+  data: Bytes! # bytes32
+  timestamp: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SchemaRegistered @entity(immutable: true) {
+  id: Bytes!
+  uid: Bytes! # bytes32
+  registerer: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SchemaResolverRegistered @entity(immutable: true) {
+  id: Bytes!
+  uid: Bytes! # bytes32
+  registerer: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Timestamped @entity(immutable: true) {
+  id: Bytes!
+  data: Bytes! # bytes32
+  timestamp: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

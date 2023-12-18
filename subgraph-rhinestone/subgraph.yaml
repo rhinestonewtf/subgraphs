@@ -1,0 +1,51 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Registry
+    network: mumbai
+    source:
+      address: "0xE6b4923Ca38A5310b96784e732a52BF4999ee6Ab"
+      abi: Registry
+      startBlock: 43719375
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Attested
+        - ModuleDeployed
+        - ModuleDeployedExternalFactory
+        - ModuleRegistration
+        - NewSchemaResolver
+        - Revoked
+        - RevokedOffchain
+        - SchemaRegistered
+        - SchemaResolverRegistered
+        - Timestamped
+      abis:
+        - name: Registry
+          file: ./abis/Registry.json
+      eventHandlers:
+        - event: Attested(indexed address,indexed address,bytes32,indexed address)
+          handler: handleAttested
+        - event: ModuleDeployed(indexed address,indexed bytes32,bytes32)
+          handler: handleModuleDeployed
+        - event: ModuleDeployedExternalFactory(indexed address,indexed address,bytes32)
+          handler: handleModuleDeployedExternalFactory
+        - event: ModuleRegistration(indexed address,indexed address,bytes32)
+          handler: handleModuleRegistration
+        - event: NewSchemaResolver(indexed bytes32,address)
+          handler: handleNewSchemaResolver
+        - event: Revoked(indexed address,indexed address,indexed bytes32)
+          handler: handleRevoked
+        - event: RevokedOffchain(indexed address,indexed bytes32,indexed uint64)
+          handler: handleRevokedOffchain
+        - event: SchemaRegistered(indexed bytes32,address)
+          handler: handleSchemaRegistered
+        - event: SchemaResolverRegistered(indexed bytes32,address)
+          handler: handleSchemaResolverRegistered
+        - event: Timestamped(indexed bytes32,indexed uint64)
+          handler: handleTimestamped
+      file: ./src/registry.ts
