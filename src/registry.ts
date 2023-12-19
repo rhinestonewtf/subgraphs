@@ -59,9 +59,7 @@ export function handleRevoked(event: RevokedEvent): void {
 }
 
 function createOrUpdateAttestedQuery(event: AttestedEvent): void {
-  const attestedQueryId = event.params.subject.concatI32(
-    event.params.attester.toI32()
-  );
+  const attestedQueryId = event.params.subject.concat(event.params.attester);
 
   let attestedQuery = AttestedQuery.load(attestedQueryId);
 
@@ -83,9 +81,7 @@ function createOrUpdateAttestedQuery(event: AttestedEvent): void {
 }
 
 function revokeAttestedQuery(event: RevokedEvent): void {
-  const attestedQueryId = event.params.subject.concatI32(
-    event.params.revoker.toI32()
-  );
+  const attestedQueryId = event.params.subject.concat(event.params.revoker);
 
   let attestedQuery = AttestedQuery.load(attestedQueryId);
 
