@@ -28,3 +28,15 @@ type Revoked @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type AttestedQuery @entity {
+  id: Bytes!
+  subject: Bytes! # address
+  attester: Bytes! # address
+  schema: Bytes! # bytes32
+  dataPointer: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+  isRevoked: Boolean!
+}
