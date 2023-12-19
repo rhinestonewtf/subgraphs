@@ -1,0 +1,30 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Registry
+    network: mumbai
+    source:
+      address: "0xE6b4923Ca38A5310b96784e732a52BF4999ee6Ab"
+      abi: Registry
+      startBlock: 43719375
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ModuleRegistration
+        - Attested
+        - Revoked
+      abis:
+        - name: Registry
+          file: Registry/abis/Registry.json
+      eventHandlers:
+        - event: ModuleRegistration(indexed address,indexed address,bytes32)
+          handler: handleModuleRegistration
+        - event: Attested(indexed address,indexed address,bytes32,indexed address)
+          handler: handleAttested
+        - event: Revoked(indexed address,indexed address,indexed bytes32)
+          handler: handleRevoked
+      file: Registry/Registry.wasm

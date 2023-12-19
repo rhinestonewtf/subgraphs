@@ -3,7 +3,12 @@ import {
   ModuleRegistration as ModuleRegistrationEvent,
   Revoked as RevokedEvent,
 } from "../generated/Registry/Registry";
-import { ModuleRegistration, Attested, Revoked } from "../generated/schema";
+import {
+  ModuleRegistration,
+  Attested,
+  Revoked,
+  AttestedQuery,
+} from "../generated/schema";
 
 export function handleModuleRegistration(event: ModuleRegistrationEvent): void {
   const entity = new ModuleRegistration(
@@ -34,6 +39,7 @@ export function handleAttested(event: AttestedEvent): void {
   entity.transactionHash = event.transaction.hash;
 
   entity.save();
+  createOrUpdateAttestedQuery(event);
 }
 
 export function handleRevoked(event: RevokedEvent): void {
@@ -49,4 +55,42 @@ export function handleRevoked(event: RevokedEvent): void {
   entity.transactionHash = event.transaction.hash;
 
   entity.save();
+  revokeAttestedQuery(event);
+}
+
+function createOrUpdateAttestedQuery(event: AttestedEvent): void {
+  const attestedQueryId = event.params.subject.concatI32(
+    event.params.attester.toI32()
+  );
+
+  let attestedQuery = AttestedQuery.load(attestedQueryId);
+
+  if (attestedQuery == null) {
+    attestedQuery = new AttestedQuery(attestedQueryId);
+    attestedQuery.subject = event.params.subject;
+    attestedQuery.attester = event.params.attester;
+  }
+
+  attestedQuery.schema = event.params.schema;
+  attestedQuery.dataPointer = event.params.dataPointer;
+  attestedQuery.isRevoked = false;
+
+  attestedQuery.blockNumber = event.block.number;
+  attestedQuery.blockTimestamp = event.block.timestamp;
+  attestedQuery.transactionHash = event.transaction.hash;
+
+  attestedQuery.save();
+}
+
+function revokeAttestedQuery(event: RevokedEvent): void {
+  const attestedQueryId = event.params.subject.concatI32(
+    event.params.revoker.toI32()
+  );
+
+  let attestedQuery = AttestedQuery.load(attestedQueryId);
+
+  if (attestedQuery !== null) {
+    attestedQuery.isRevoked = true;
+    attestedQuery.save();
+  }
 }
