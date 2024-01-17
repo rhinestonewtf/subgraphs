@@ -1,3 +1,4 @@
+import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 import {
   ExecutionExecuted as ExecutionExecutedEvent,
   ExecutionRequested as ExecutionRequestedEvent,
@@ -48,8 +49,8 @@ export function createExecutionRequestedQuery(
 ): void {
   const executionQueryId = event.params.subAccount
     .concat(event.params.target)
-    .concat(event.params.callData)
-    .concat(event.transaction.hash);
+    .concat(new Bytes(event.params.value.toU32()))
+    .concat(event.params.callData);
 
   const entity = new ExecutionRequestedQuery(executionQueryId);
   entity.subAccount = event.params.subAccount;
@@ -71,8 +72,8 @@ export function updateExecutionRequestedQuery(
 ): void {
   const executionQueryId = event.params.subAccount
     .concat(event.params.target)
-    .concat(event.params.callData)
-    .concat(event.transaction.hash);
+    .concat(new Bytes(event.params.value.toU32()))
+    .concat(event.params.callData);
 
   const entity = ExecutionRequestedQuery.load(executionQueryId);
 
