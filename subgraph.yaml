@@ -28,3 +28,26 @@ dataSources:
         - event: Revoked(indexed address,indexed address,indexed bytes32)
           handler: handleRevoked
       file: ./src/registry.ts
+  - kind: ethereum
+    name: VirtualColdStorage
+    network: mumbai
+    source:
+      address: "0xC08270eB7568480A2A93b499c1d471100B6f445c"
+      abi: VirtualColdStorage
+      startBlock: 44842977
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ExecutionExecuted
+        - ExecutionRequested
+      abis:
+        - name: VirtualColdStorage
+          file: ./abis/VirtualColdStorage.json
+      eventHandlers:
+        - event: ExecutionExecuted(indexed address,address,uint256,bytes)
+          handler: handleExecutionExecuted
+        - event: ExecutionRequested(indexed address,address,uint256,bytes,uint256)
+          handler: handleExecutionRequested
+      file: ./src/virtualColdStorage.ts

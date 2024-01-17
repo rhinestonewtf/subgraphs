@@ -40,3 +40,38 @@ type AttestedQuery @entity {
   transactionHash: Bytes!
   isRevoked: Boolean!
 }
+type ExecutionExecuted @entity(immutable: true) {
+  id: Bytes!
+  subAccount: Bytes! # address
+  target: Bytes! # address
+  value: BigInt! # uint256
+  callData: Bytes! # bytes
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ExecutionRequested @entity(immutable: true) {
+  id: Bytes!
+  subAccount: Bytes! # address
+  target: Bytes! # address
+  value: BigInt! # uint256
+  callData: Bytes! # bytes
+  executeAfter: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ExecutionRequestedQuery @entity(immutable: true) {
+  id: Bytes!
+  subAccount: Bytes! # address
+  target: Bytes! # address
+  value: BigInt! # uint256
+  callData: Bytes! # bytes
+  executeAfter: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+  isExecuted: Boolean!
+}
