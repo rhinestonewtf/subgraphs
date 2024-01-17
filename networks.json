@@ -3,6 +3,9 @@
     "Registry": {
       "address": "0xE6b4923Ca38A5310b96784e732a52BF4999ee6Ab",
       "startBlock": 43719375
+    },
+    "VirtualColdStorage": {
+      "address": "0xC08270eB7568480A2A93b499c1d471100B6f445c"
     }
   }
 }
