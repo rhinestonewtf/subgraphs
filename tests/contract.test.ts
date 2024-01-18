@@ -9,7 +9,7 @@ import {
 import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts";
 import { ExecutionExecuted } from "../generated/schema";
 import { ExecutionExecuted as ExecutionExecutedEvent } from "../generated/VirtualColdStorage/VirtualColdStorage";
-import { handleExecutionExecuted } from "../src/contract";
+import { handleExecutionExecuted } from "../src/virtualColdStorage";
 import { createExecutionExecutedEvent } from "./contract-utils";
 
 // Tests structure (matchstick-as >=0.5.0)

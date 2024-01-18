@@ -63,7 +63,7 @@ type ExecutionRequested @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type ExecutionRequestedQuery @entity(immutable: true) {
+type ExecutionRequestedQuery @entity {
   id: Bytes!
   subAccount: Bytes! # address
   target: Bytes! # address
