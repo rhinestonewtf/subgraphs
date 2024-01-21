@@ -1,4 +1,4 @@
-import { BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { Bytes } from "@graphprotocol/graph-ts";
 import {
   ExecutionExecuted as ExecutionExecutedEvent,
   ExecutionRequested as ExecutionRequestedEvent,

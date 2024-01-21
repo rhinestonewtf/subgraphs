@@ -79,6 +79,27 @@ export class VirtualColdStorage extends ethereum.SmartContract {
     return new VirtualColdStorage("VirtualColdStorage", address);
   }
 
+  getLockTime(subAccount: Address): BigInt {
+    let result = super.call("getLockTime", "getLockTime(address):(uint256)", [
+      ethereum.Value.fromAddress(subAccount)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_getLockTime(subAccount: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getLockTime",
+      "getLockTime(address):(uint256)",
+      [ethereum.Value.fromAddress(subAccount)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   isModuleType(isType: BigInt): boolean {
     let result = super.call("isModuleType", "isModuleType(uint256):(bool)", [
       ethereum.Value.fromUnsignedBigInt(isType)
