@@ -32,9 +32,9 @@ dataSources:
     name: VirtualColdStorage
     network: mumbai
     source:
-      address: "0xC08270eB7568480A2A93b499c1d471100B6f445c"
+      address: "0x31A669954c1d1882FA9b876e63bb868DD12Baa44"
       abi: VirtualColdStorage
-      startBlock: 44842977
+      startBlock: 44942921
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

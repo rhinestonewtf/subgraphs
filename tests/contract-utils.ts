@@ -1,9 +1,9 @@
-import { newMockEvent } from "matchstick-as";
-import { ethereum, Address, BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { newMockEvent } from "matchstick-as"
+import { ethereum, Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
 import {
   ExecutionExecuted,
-  ExecutionRequested,
-} from "../generated/VirtualColdStorage/VirtualColdStorage";
+  ExecutionRequested
+} from "../generated/Contract/Contract"
 
 export function createExecutionExecutedEvent(
   subAccount: Address,
@@ -11,27 +11,27 @@ export function createExecutionExecutedEvent(
   value: BigInt,
   callData: Bytes
 ): ExecutionExecuted {
-  let executionExecutedEvent = changetype<ExecutionExecuted>(newMockEvent());
+  let executionExecutedEvent = changetype<ExecutionExecuted>(newMockEvent())
 
-  executionExecutedEvent.parameters = new Array();
+  executionExecutedEvent.parameters = new Array()
 
   executionExecutedEvent.parameters.push(
     new ethereum.EventParam(
       "subAccount",
       ethereum.Value.fromAddress(subAccount)
     )
-  );
+  )
   executionExecutedEvent.parameters.push(
     new ethereum.EventParam("target", ethereum.Value.fromAddress(target))
-  );
+  )
   executionExecutedEvent.parameters.push(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
-  );
+  )
   executionExecutedEvent.parameters.push(
     new ethereum.EventParam("callData", ethereum.Value.fromBytes(callData))
-  );
+  )
 
-  return executionExecutedEvent;
+  return executionExecutedEvent
 }
 
 export function createExecutionRequestedEvent(
@@ -41,31 +41,31 @@ export function createExecutionRequestedEvent(
   callData: Bytes,
   executeAfter: BigInt
 ): ExecutionRequested {
-  let executionRequestedEvent = changetype<ExecutionRequested>(newMockEvent());
+  let executionRequestedEvent = changetype<ExecutionRequested>(newMockEvent())
 
-  executionRequestedEvent.parameters = new Array();
+  executionRequestedEvent.parameters = new Array()
 
   executionRequestedEvent.parameters.push(
     new ethereum.EventParam(
       "subAccount",
       ethereum.Value.fromAddress(subAccount)
     )
-  );
+  )
   executionRequestedEvent.parameters.push(
     new ethereum.EventParam("target", ethereum.Value.fromAddress(target))
-  );
+  )
   executionRequestedEvent.parameters.push(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
-  );
+  )
   executionRequestedEvent.parameters.push(
     new ethereum.EventParam("callData", ethereum.Value.fromBytes(callData))
-  );
+  )
   executionRequestedEvent.parameters.push(
     new ethereum.EventParam(
       "executeAfter",
       ethereum.Value.fromUnsignedBigInt(executeAfter)
     )
-  );
+  )
 
-  return executionRequestedEvent;
+  return executionRequestedEvent
 }
