@@ -49,7 +49,6 @@ export function createExecutionRequestedQuery(
 ): void {
   const executionQueryId = event.params.subAccount
     .concat(event.params.target)
-    .concat(new Bytes(event.params.value.toU32()))
     .concat(event.params.callData);
 
   const entity = new ExecutionRequestedQuery(executionQueryId);
@@ -72,7 +71,6 @@ export function updateExecutionRequestedQuery(
 ): void {
   const executionQueryId = event.params.subAccount
     .concat(event.params.target)
-    .concat(new Bytes(event.params.value.toU32()))
     .concat(event.params.callData);
 
   const entity = ExecutionRequestedQuery.load(executionQueryId);
