@@ -1,4 +1,4 @@
-import { Bytes } from "@graphprotocol/graph-ts";
+import { Bytes, BigInt } from "@graphprotocol/graph-ts";
 import {
   ExecutionExecuted as ExecutionExecutedEvent,
   ExecutionRequested as ExecutionRequestedEvent,
@@ -47,9 +47,15 @@ export function handleExecutionRequested(event: ExecutionRequestedEvent): void {
 export function createExecutionRequestedQuery(
   event: ExecutionRequestedEvent
 ): void {
+  let value = event.params.value
+    ? event.params.value.toHex()
+    : BigInt.fromI32(0).toHex();
+  if (value.length % 2 != 0) {
+    value = "0x0" + value.slice(2);
+  }
   const executionQueryId = event.params.subAccount
     .concat(event.params.target)
-    .concat(new Bytes(event.params.value.toU32()))
+    .concat(Bytes.fromHexString(value))
     .concat(event.params.callData);
 
   const entity = new ExecutionRequestedQuery(executionQueryId);
@@ -70,9 +76,15 @@ export function createExecutionRequestedQuery(
 export function updateExecutionRequestedQuery(
   event: ExecutionExecutedEvent
 ): void {
+  let value = event.params.value
+    ? event.params.value.toHex()
+    : BigInt.fromI32(0).toHex();
+  if (value.length % 2 != 0) {
+    value = "0x0" + value.slice(2);
+  }
   const executionQueryId = event.params.subAccount
     .concat(event.params.target)
-    .concat(new Bytes(event.params.value.toU32()))
+    .concat(Bytes.fromHexString(value))
     .concat(event.params.callData);
 
   const entity = ExecutionRequestedQuery.load(executionQueryId);
