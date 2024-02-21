@@ -51,3 +51,55 @@ dataSources:
         - event: ExecutionRequested(indexed address,address,uint256,bytes,uint256)
           handler: handleExecutionRequested
       file: ./src/virtualColdStorage.ts
+  - kind: ethereum
+    name: ScheduledOrders
+    network: mumbai
+    source:
+      address: "0x955a2e690809CC5C2FfCF96212dc3b650AC2F816"
+      abi: ScheduledOrders
+      startBlock: 46135897
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ExecutionAdded
+        - ExecutionStatusUpdated
+        - ExecutionTriggered
+      abis:
+        - name: ScheduledOrders
+          file: ./abis/ScheduledOrders.json
+      eventHandlers:
+        - event: ExecutionAdded(indexed address,indexed uint256)
+          handler: handleExecutionAdded
+        - event: ExecutionStatusUpdated(indexed address,indexed uint256)
+          handler: handleExecutionStatusUpdated
+        - event: ExecutionTriggered(indexed address,indexed uint256)
+          handler: handleExecutionTriggered
+      file: ./src/scheduledOrders.ts
+  - kind: ethereum
+    name: ScheduledTransfers
+    network: mumbai
+    source:
+      address: "0xDb3234b7169ee6c4AF8E246959cE0Fedb07F7963"
+      abi: ScheduledTransfers
+      startBlock: 46143330
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ScheduledTransfersExecutionAdded
+        - ScheduledTransfersExecutionStatusUpdated
+        - ScheduledTransfersExecutionTriggered
+      abis:
+        - name: ScheduledTransfers
+          file: ./abis/ScheduledTransfers.json
+      eventHandlers:
+        - event: ExecutionAdded(indexed address,indexed uint256)
+          handler: handleExecutionAdded
+        - event: ExecutionStatusUpdated(indexed address,indexed uint256)
+          handler: handleExecutionStatusUpdated
+        - event: ExecutionTriggered(indexed address,indexed uint256)
+          handler: handleExecutionTriggered
+      file: ./src/scheduled-transfers.ts

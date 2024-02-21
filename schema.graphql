@@ -75,3 +75,61 @@ type ExecutionRequestedQuery @entity {
   transactionHash: Bytes!
   isExecuted: Boolean!
 }
+type ExecutionAdded @entity(immutable: true) {
+  id: Bytes!
+  smartAccount: Bytes! # address
+  jobId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ExecutionStatusUpdated @entity(immutable: true) {
+  id: Bytes!
+  smartAccount: Bytes! # address
+  jobId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ExecutionTriggered @entity(immutable: true) {
+  id: Bytes!
+  smartAccount: Bytes! # address
+  jobId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ExecutionAddedQuery @entity {
+  id: Bytes!
+  smartAccount: Bytes! # address
+  jobId: BigInt! # uint256
+  executeInterval: BigInt!
+  numberOfExecutions: BigInt!
+  numberOfExecutionsCompleted: BigInt!
+  startDate: BigInt!
+  isEnabled: Boolean!
+  blockNumber: BigInt!
+  lastExecutionTime: BigInt!
+  executionData: Bytes!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ScheduledTransfersExecutionAddedQuery @entity {
+  id: Bytes!
+  smartAccount: Bytes! # address
+  jobId: BigInt! # uint256
+  executeInterval: BigInt!
+  numberOfExecutions: BigInt!
+  numberOfExecutionsCompleted: BigInt!
+  startDate: BigInt!
+  isEnabled: Boolean!
+  blockNumber: BigInt!
+  lastExecutionTime: BigInt!
+  executionData: Bytes!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

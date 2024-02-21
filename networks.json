@@ -6,6 +6,12 @@
     },
     "VirtualColdStorage": {
       "address": "0x31A669954c1d1882FA9b876e63bb868DD12Baa44"
+    },
+    "ScheduledOrders": {
+      "address": "0x955a2e690809CC5C2FfCF96212dc3b650AC2F816"
+    },
+    "ScheduledTransfers": {
+      "address": "0xDb3234b7169ee6c4AF8E246959cE0Fedb07F7963"
     }
   }
 }
