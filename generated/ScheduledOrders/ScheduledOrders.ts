@@ -76,16 +76,16 @@ export class ExecutionTriggered__Params {
   }
 }
 
-export class ModuleUninstalled extends ethereum.Event {
-  get params(): ModuleUninstalled__Params {
-    return new ModuleUninstalled__Params(this);
+export class ExecutionsCancelled extends ethereum.Event {
+  get params(): ExecutionsCancelled__Params {
+    return new ExecutionsCancelled__Params(this);
   }
 }
 
-export class ModuleUninstalled__Params {
-  _event: ModuleUninstalled;
+export class ExecutionsCancelled__Params {
+  _event: ExecutionsCancelled;
 
-  constructor(event: ModuleUninstalled) {
+  constructor(event: ExecutionsCancelled) {
     this._event = event;
   }
 

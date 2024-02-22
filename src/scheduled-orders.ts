@@ -1,19 +1,20 @@
+import { BigInt } from "@graphprotocol/graph-ts";
 import {
   ExecutionAdded as ExecutionAddedEvent,
   ExecutionStatusUpdated as ExecutionStatusUpdatedEvent,
   ExecutionTriggered as ExecutionTriggeredEvent,
-  ModuleUninstalled as ModuleUninstalledEvent,
+  ExecutionsCancelled as ExecutionsCancelledEvent,
   ScheduledOrders,
 } from "../generated/ScheduledOrders/ScheduledOrders";
 import {
   ExecutionAdded,
+  ExecutionAddedQuery,
   ExecutionStatusUpdated,
   ExecutionTriggered,
-  ExecutionAddedQuery,
   ExecutionTriggeredQuery,
+  ExecutionsCancelled,
 } from "../generated/schema";
-import { Bytes, BigInt } from "@graphprotocol/graph-ts";
-import { store } from "@graphprotocol/graph-ts";
+import { store, log } from "@graphprotocol/graph-ts";
 
 export function handleExecutionAdded(event: ExecutionAddedEvent): void {
   let entity = new ExecutionAdded(
@@ -44,6 +45,33 @@ export function handleExecutionTriggered(event: ExecutionTriggeredEvent): void {
   entity.save();
   createTriggeredOrderQuery(event);
   updateScheduledOrdersQuery(event);
+}
+
+export function handleExecutionsCancelled(
+  event: ExecutionsCancelledEvent
+): void {
+  let entity = new ExecutionsCancelled(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  );
+  entity.smartAccount = event.params.smartAccount;
+
+  entity.blockNumber = event.block.number;
+  entity.blockTimestamp = event.block.timestamp;
+  entity.transactionHash = event.transaction.hash;
+
+  const contract = ScheduledOrders.bind(event.address);
+  const jobsCount = contract.getAccountJobCount(event.params.smartAccount);
+
+  log.debug("jobsCount: {}", [jobsCount.toString()]);
+
+  for (let jobId = 1; jobId <= jobsCount.toI32(); jobId++) {
+    const executionQueryId = event.params.smartAccount
+      .concatI32(jobId)
+      .toString();
+    store.remove("ExecutionAddedQuery", executionQueryId);
+  }
+
+  entity.save();
 }
 
 export function createScheduledOrdersQuery(event: ExecutionAddedEvent): void {
@@ -130,33 +158,5 @@ export function updateScheduledOrdersQuery(
     entity.lastExecutionTime = event.block.timestamp;
 
     entity.save();
-  }
-}
-
-export function handleExecutionStatusUpdated(
-  event: ExecutionStatusUpdatedEvent
-): void {
-  let entity = new ExecutionStatusUpdated(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  );
-  entity.smartAccount = event.params.smartAccount;
-  entity.jobId = event.params.jobId;
-
-  entity.blockNumber = event.block.number;
-  entity.blockTimestamp = event.block.timestamp;
-  entity.transactionHash = event.transaction.hash;
-
-  entity.save();
-}
-
-export function handleModuleUninstalled(event: ModuleUninstalledEvent): void {
-  const contract = ScheduledOrders.bind(event.address);
-  const jobsCount = contract.getAccountJobCount(event.params.smartAccount);
-
-  for (let jobId = 1; jobId <= jobsCount.toI32(); jobId++) {
-    const executionQueryId = event.params.smartAccount
-      .concatI32(jobId)
-      .toString();
-    store.remove("ExecutionAddedQuery", executionQueryId);
   }
 }

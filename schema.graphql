@@ -93,14 +93,6 @@ type ExecutionStatusUpdated @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type ModuleUninstalled @entity(immutable: true) {
-  id: Bytes!
-  smartAccount: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
 type ExecutionTriggered @entity(immutable: true) {
   id: Bytes!
   smartAccount: Bytes! # address
@@ -170,6 +162,14 @@ type ScheduledTransfersExecutionTriggeredQuery @entity {
   blockNumber: BigInt!
   lastExecutionTime: BigInt!
   executionData: Bytes!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ExecutionsCancelled @entity(immutable: true) {
+  id: Bytes!
+  smartAccount: Bytes! # address
+  blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }

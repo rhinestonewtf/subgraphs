@@ -1,18 +1,20 @@
-import { BigInt, store } from "@graphprotocol/graph-ts";
+import { BigInt } from "@graphprotocol/graph-ts";
 import {
   ExecutionAdded as ExecutionAddedEvent,
   ExecutionStatusUpdated as ExecutionStatusUpdatedEvent,
   ExecutionTriggered as ExecutionTriggeredEvent,
-  ModuleUninstalled as ModuleUninstalledEvent,
+  ExecutionsCancelled as ExecutionsCancelledEvent,
   ScheduledTransfers,
 } from "../generated/ScheduledTransfers/ScheduledTransfers";
 import {
   ExecutionAdded,
   ExecutionStatusUpdated,
   ExecutionTriggered,
+  ExecutionsCancelled,
   ScheduledTransfersExecutionAddedQuery,
   ScheduledTransfersExecutionTriggeredQuery,
 } from "../generated/schema";
+import { store, log } from "@graphprotocol/graph-ts";
 
 export function handleExecutionAdded(event: ExecutionAddedEvent): void {
   let entity = new ExecutionAdded(
@@ -29,34 +31,6 @@ export function handleExecutionAdded(event: ExecutionAddedEvent): void {
   createScheduledTransfersQuery(event);
 }
 
-export function handleModuleUninstalled(event: ModuleUninstalledEvent): void {
-  const contract = ScheduledTransfers.bind(event.address);
-  const jobsCount = contract.getAccountJobCount(event.params.smartAccount);
-
-  for (let jobId = 1; jobId <= jobsCount.toI32(); jobId++) {
-    const executionQueryId = event.params.smartAccount
-      .concatI32(jobId)
-      .toString();
-    store.remove("ScheduledTransfersExecutionAddedQuery", executionQueryId);
-  }
-}
-
-export function handleExecutionStatusUpdated(
-  event: ExecutionStatusUpdatedEvent
-): void {
-  let entity = new ExecutionStatusUpdated(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  );
-  entity.smartAccount = event.params.smartAccount;
-  entity.jobId = event.params.jobId;
-
-  entity.blockNumber = event.block.number;
-  entity.blockTimestamp = event.block.timestamp;
-  entity.transactionHash = event.transaction.hash;
-
-  entity.save();
-}
-
 export function handleExecutionTriggered(event: ExecutionTriggeredEvent): void {
   let entity = new ExecutionTriggered(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -71,6 +45,35 @@ export function handleExecutionTriggered(event: ExecutionTriggeredEvent): void {
   entity.save();
   createTriggeredOrderQuery(event);
   updateScheduledTransfersQuery(event);
+}
+
+export function handleExecutionsCancelled(
+  event: ExecutionsCancelledEvent
+): void {
+  let entity = new ExecutionsCancelled(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  );
+  entity.smartAccount = event.params.smartAccount;
+
+  entity.blockNumber = event.block.number;
+  entity.blockTimestamp = event.block.timestamp;
+  entity.transactionHash = event.transaction.hash;
+
+  const contract = ScheduledTransfers.bind(event.address);
+  const jobsCount = contract.getAccountJobCount(event.params.smartAccount);
+
+  log.debug("jobsCount: {}", [jobsCount.toString()]);
+
+  for (let jobId = 1; jobId <= jobsCount.toI32(); jobId++) {
+    const executionQueryId = event.params.smartAccount
+      .concatI32(jobId)
+      .toString();
+
+    log.debug("executionQueryId: {}", [executionQueryId]);
+    store.remove("ScheduledTransfersExecutionAddedQuery", executionQueryId);
+  }
+
+  entity.save();
 }
 
 export function createScheduledTransfersQuery(

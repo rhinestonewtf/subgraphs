@@ -55,57 +55,51 @@ dataSources:
     name: ScheduledOrders
     network: mumbai
     source:
-      address: "0x20aAfDF1Cc6F452F539d72586B1aA28dE701cCb7"
+      address: "0x69639B1D1a938aF5e426fb73DA1F095181C8EDC2"
       abi: ScheduledOrders
-      startBlock: 46135897
+      startBlock: 46219600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - ExecutionAdded
-        - ExecutionStatusUpdated
         - ExecutionTriggered
-        - ModuleUninstalled
+        - ExecutionsCancelled
       abis:
         - name: ScheduledOrders
           file: ./abis/ScheduledOrders.json
       eventHandlers:
         - event: ExecutionAdded(indexed address,indexed uint256)
           handler: handleExecutionAdded
-        - event: ExecutionStatusUpdated(indexed address,indexed uint256)
-          handler: handleExecutionStatusUpdated
         - event: ExecutionTriggered(indexed address,indexed uint256)
           handler: handleExecutionTriggered
-        - event: ModuleUninstalled(indexed address)
-          handler: handleModuleUninstalled
-      file: ./src/scheduledOrders.ts
+        - event: ExecutionsCancelled(indexed address)
+          handler: handleExecutionsCancelled
+      file: ./src/scheduled-orders.ts
   - kind: ethereum
     name: ScheduledTransfers
     network: mumbai
     source:
-      address: "0x17d59D47d54Ec39a84e5369acB4c3Aea26567667"
+      address: "0xA6291D9B50755cd2599Ee29883a13dEf031808fF"
       abi: ScheduledTransfers
-      startBlock: 46143330
+      startBlock: 46220756
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - ExecutionAdded
-        - ExecutionStatusUpdated
         - ExecutionTriggered
-        - ModuleUninstalled
+        - ExecutionsCancelled
       abis:
         - name: ScheduledTransfers
           file: ./abis/ScheduledTransfers.json
       eventHandlers:
         - event: ExecutionAdded(indexed address,indexed uint256)
           handler: handleExecutionAdded
-        - event: ExecutionStatusUpdated(indexed address,indexed uint256)
-          handler: handleExecutionStatusUpdated
         - event: ExecutionTriggered(indexed address,indexed uint256)
           handler: handleExecutionTriggered
-        - event: ModuleUninstalled(indexed address)
-          handler: handleModuleUninstalled
+        - event: ExecutionsCancelled(indexed address)
+          handler: handleExecutionsCancelled
       file: ./src/scheduled-transfers.ts
