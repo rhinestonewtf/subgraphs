@@ -76,6 +76,24 @@ export class ExecutionTriggered__Params {
   }
 }
 
+export class ModuleUninstalled extends ethereum.Event {
+  get params(): ModuleUninstalled__Params {
+    return new ModuleUninstalled__Params(this);
+  }
+}
+
+export class ModuleUninstalled__Params {
+  _event: ModuleUninstalled;
+
+  constructor(event: ModuleUninstalled) {
+    this._event = event;
+  }
+
+  get smartAccount(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
 export class ScheduledOrders__getAccountJobDetailsResultValue0Struct extends ethereum.Tuple {
   get executeInterval(): BigInt {
     return this[0].toBigInt();
@@ -109,6 +127,29 @@ export class ScheduledOrders__getAccountJobDetailsResultValue0Struct extends eth
 export class ScheduledOrders extends ethereum.SmartContract {
   static bind(address: Address): ScheduledOrders {
     return new ScheduledOrders("ScheduledOrders", address);
+  }
+
+  getAccountJobCount(smartAccount: Address): BigInt {
+    let result = super.call(
+      "getAccountJobCount",
+      "getAccountJobCount(address):(uint256)",
+      [ethereum.Value.fromAddress(smartAccount)]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getAccountJobCount(smartAccount: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getAccountJobCount",
+      "getAccountJobCount(address):(uint256)",
+      [ethereum.Value.fromAddress(smartAccount)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   getAccountJobDetails(

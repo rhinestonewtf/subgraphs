@@ -55,7 +55,7 @@ dataSources:
     name: ScheduledOrders
     network: mumbai
     source:
-      address: "0x955a2e690809CC5C2FfCF96212dc3b650AC2F816"
+      address: "0x20aAfDF1Cc6F452F539d72586B1aA28dE701cCb7"
       abi: ScheduledOrders
       startBlock: 46135897
     mapping:
@@ -66,6 +66,7 @@ dataSources:
         - ExecutionAdded
         - ExecutionStatusUpdated
         - ExecutionTriggered
+        - ModuleUninstalled
       abis:
         - name: ScheduledOrders
           file: ./abis/ScheduledOrders.json
@@ -76,12 +77,14 @@ dataSources:
           handler: handleExecutionStatusUpdated
         - event: ExecutionTriggered(indexed address,indexed uint256)
           handler: handleExecutionTriggered
+        - event: ModuleUninstalled(indexed address)
+          handler: handleModuleUninstalled
       file: ./src/scheduledOrders.ts
   - kind: ethereum
     name: ScheduledTransfers
     network: mumbai
     source:
-      address: "0xDb3234b7169ee6c4AF8E246959cE0Fedb07F7963"
+      address: "0x17d59D47d54Ec39a84e5369acB4c3Aea26567667"
       abi: ScheduledTransfers
       startBlock: 46143330
     mapping:
@@ -89,9 +92,10 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - ScheduledTransfersExecutionAdded
-        - ScheduledTransfersExecutionStatusUpdated
-        - ScheduledTransfersExecutionTriggered
+        - ExecutionAdded
+        - ExecutionStatusUpdated
+        - ExecutionTriggered
+        - ModuleUninstalled
       abis:
         - name: ScheduledTransfers
           file: ./abis/ScheduledTransfers.json
@@ -102,4 +106,6 @@ dataSources:
           handler: handleExecutionStatusUpdated
         - event: ExecutionTriggered(indexed address,indexed uint256)
           handler: handleExecutionTriggered
+        - event: ModuleUninstalled(indexed address)
+          handler: handleModuleUninstalled
       file: ./src/scheduled-transfers.ts

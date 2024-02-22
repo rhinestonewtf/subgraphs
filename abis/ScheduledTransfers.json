@@ -30,7 +30,11 @@
             "type": "uint48",
             "internalType": "uint48"
           },
-          { "name": "executionData", "type": "bytes", "internalType": "bytes" }
+          {
+            "name": "executionData",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
         ]
       }
     ],
@@ -48,9 +52,22 @@
   },
   {
     "type": "function",
+    "name": "getAccountJobCount",
+    "inputs": [
+      { "name": "smartAccount", "type": "address", "internalType": "address" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "getAccountJobDetails",
     "inputs": [
-      { "name": "smartAccount", "type": "address", "internalType": "address" },
+      {
+        "name": "smartAccount",
+        "type": "address",
+        "internalType": "address"
+      },
       { "name": "jobId", "type": "uint256", "internalType": "uint256" }
     ],
     "outputs": [
@@ -81,7 +98,11 @@
             "type": "uint48",
             "internalType": "uint48"
           },
-          { "name": "executionData", "type": "bytes", "internalType": "bytes" }
+          {
+            "name": "executionData",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
         ]
       }
     ],
@@ -221,6 +242,19 @@
         "type": "uint256",
         "indexed": true,
         "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ModuleUninstalled",
+    "inputs": [
+      {
+        "name": "smartAccount",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
       }
     ],
     "anonymous": false

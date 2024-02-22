@@ -1,8 +1,9 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, store } from "@graphprotocol/graph-ts";
 import {
   ExecutionAdded as ExecutionAddedEvent,
   ExecutionStatusUpdated as ExecutionStatusUpdatedEvent,
   ExecutionTriggered as ExecutionTriggeredEvent,
+  ModuleUninstalled as ModuleUninstalledEvent,
   ScheduledTransfers,
 } from "../generated/ScheduledTransfers/ScheduledTransfers";
 import {
@@ -10,6 +11,7 @@ import {
   ExecutionStatusUpdated,
   ExecutionTriggered,
   ScheduledTransfersExecutionAddedQuery,
+  ScheduledTransfersExecutionTriggeredQuery,
 } from "../generated/schema";
 
 export function handleExecutionAdded(event: ExecutionAddedEvent): void {
@@ -25,6 +27,18 @@ export function handleExecutionAdded(event: ExecutionAddedEvent): void {
 
   entity.save();
   createScheduledTransfersQuery(event);
+}
+
+export function handleModuleUninstalled(event: ModuleUninstalledEvent): void {
+  const contract = ScheduledTransfers.bind(event.address);
+  const jobsCount = contract.getAccountJobCount(event.params.smartAccount);
+
+  for (let jobId = 1; jobId <= jobsCount.toI32(); jobId++) {
+    const executionQueryId = event.params.smartAccount
+      .concatI32(jobId)
+      .toString();
+    store.remove("ScheduledTransfersExecutionAddedQuery", executionQueryId);
+  }
 }
 
 export function handleExecutionStatusUpdated(
@@ -55,6 +69,7 @@ export function handleExecutionTriggered(event: ExecutionTriggeredEvent): void {
   entity.transactionHash = event.transaction.hash;
 
   entity.save();
+  createTriggeredOrderQuery(event);
   updateScheduledTransfersQuery(event);
 }
 
@@ -72,6 +87,44 @@ export function createScheduledTransfersQuery(
   );
 
   const entity = new ScheduledTransfersExecutionAddedQuery(executionQueryId);
+
+  entity.smartAccount = event.params.smartAccount;
+  entity.jobId = event.params.jobId;
+
+  // job details
+  entity.executeInterval = jobDetails.executeInterval;
+  entity.numberOfExecutions = BigInt.fromI32(jobDetails.numberOfExecutions);
+  entity.numberOfExecutionsCompleted = BigInt.fromI32(
+    jobDetails.numberOfExecutionsCompleted
+  );
+  entity.startDate = jobDetails.startDate;
+  entity.executionData = jobDetails.executionData;
+  entity.isEnabled = jobDetails.isEnabled;
+  entity.lastExecutionTime = jobDetails.lastExecutionTime;
+
+  entity.blockNumber = event.block.number;
+  entity.blockTimestamp = event.block.timestamp;
+  entity.transactionHash = event.transaction.hash;
+
+  entity.save();
+}
+
+export function createTriggeredOrderQuery(
+  event: ExecutionTriggeredEvent
+): void {
+  const contract = ScheduledTransfers.bind(event.address);
+  const jobDetails = contract.getAccountJobDetails(
+    event.params.smartAccount,
+    event.params.jobId
+  );
+
+  const executionQueryId = event.params.smartAccount.concatI32(
+    event.params.jobId.toI32()
+  );
+
+  const entity = new ScheduledTransfersExecutionTriggeredQuery(
+    executionQueryId
+  );
 
   entity.smartAccount = event.params.smartAccount;
   entity.jobId = event.params.jobId;
