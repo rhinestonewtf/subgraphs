@@ -59,20 +59,6 @@ export function handleExecutionsCancelled(
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
 
-  const contract = ScheduledTransfers.bind(event.address);
-  const jobsCount = contract.getAccountJobCount(event.params.smartAccount);
-
-  log.debug("jobsCount: {}", [jobsCount.toString()]);
-
-  for (let jobId = 1; jobId <= jobsCount.toI32(); jobId++) {
-    const executionQueryId = event.params.smartAccount
-      .concatI32(jobId)
-      .toString();
-
-    log.debug("executionQueryId: {}", [executionQueryId]);
-    store.remove("ScheduledTransfersExecutionAddedQuery", executionQueryId);
-  }
-
   entity.save();
 }
 
