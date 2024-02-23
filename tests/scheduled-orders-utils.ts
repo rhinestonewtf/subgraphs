@@ -5,7 +5,7 @@ import {
   ExecutionStatusUpdated,
   ExecutionTriggered,
   ExecutionsCancelled
-} from "../generated/ScheduledTransfers/ScheduledTransfers"
+} from "../generated/ScheduledOrders/ScheduledOrders"
 
 export function createExecutionAddedEvent(
   smartAccount: Address,
