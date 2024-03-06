@@ -1,17 +1,19 @@
 {
-  "mumbai": {
+  "sepolia": {
     "Registry": {
-      "address": "0xE6b4923Ca38A5310b96784e732a52BF4999ee6Ab",
-      "startBlock": 43719375
+      "address": "0x500684cBaa280aDf80d5ACf7A32Daebb23162e63"
     },
     "VirtualColdStorage": {
-      "address": "0x31A669954c1d1882FA9b876e63bb868DD12Baa44"
+      "address": "0xDFE507Ad4035256E586f9e8B7d0e82184d5b8cb4",
+      "startBlock": 5368167
     },
     "ScheduledOrders": {
-      "address": "0x69639B1D1a938aF5e426fb73DA1F095181C8EDC2"
+      "address": "0x506A89D85a9733225fDB54d9e7E76D017c21E1C1",
+      "startBlock": 5368093
     },
     "ScheduledTransfers": {
-      "address": "0xA6291D9B50755cd2599Ee29883a13dEf031808fF"
+      "address": "0xAd6330089d9a1fe89f4020292E1aFE9969a5A2Fc",
+      "startBlock": 5368094
     }
   }
 }
