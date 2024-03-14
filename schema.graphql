@@ -173,3 +173,12 @@ type ExecutionsCancelled @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+type AutoSaveExecuted @entity(immutable: true) {
+  id: Bytes!
+  smartAccount: Bytes! # address
+  token: Bytes! # address
+  amountReceived: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

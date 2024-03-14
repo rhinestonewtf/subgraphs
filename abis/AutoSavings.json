@@ -1,0 +1,196 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "smartAccount", "type": "address" }
+    ],
+    "name": "AlreadyInitialized",
+    "type": "error"
+  },
+  { "inputs": [], "name": "InvalidAmount", "type": "error" },
+  {
+    "inputs": [{ "internalType": "bytes4", "name": "", "type": "bytes4" }],
+    "name": "InvalidMethod",
+    "type": "error"
+  },
+  { "inputs": [], "name": "InvalidRecipient", "type": "error" },
+  { "inputs": [], "name": "InvalidTarget", "type": "error" },
+  { "inputs": [], "name": "InvalidValue", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "smartAccount", "type": "address" }
+    ],
+    "name": "NotInitialized",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "smartAccount",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountReceived",
+        "type": "uint256"
+      }
+    ],
+    "name": "AutoSaveExecuted",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "token", "type": "address" },
+          {
+            "internalType": "uint256",
+            "name": "amountReceived",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct AutoSavingToVault.Params",
+        "name": "params",
+        "type": "tuple"
+      }
+    ],
+    "name": "autoSave",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountReceived",
+        "type": "uint256"
+      },
+      { "internalType": "uint256", "name": "percentage", "type": "uint256" }
+    ],
+    "name": "calcDepositAmount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "account", "type": "address" },
+      { "internalType": "address", "name": "token", "type": "address" }
+    ],
+    "name": "getConfig",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint16", "name": "percentage", "type": "uint16" },
+          { "internalType": "address", "name": "vault", "type": "address" },
+          {
+            "internalType": "uint128",
+            "name": "sqrtPriceLimitX96",
+            "type": "uint128"
+          }
+        ],
+        "internalType": "struct AutoSavingToVault.Config",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "smartAccount", "type": "address" }
+    ],
+    "name": "isInitialized",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "typeID", "type": "uint256" }
+    ],
+    "name": "isModuleType",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes", "name": "data", "type": "bytes" }],
+    "name": "onInstall",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes", "name": "data", "type": "bytes" }],
+    "name": "onUninstall",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "token", "type": "address" },
+      {
+        "components": [
+          { "internalType": "uint16", "name": "percentage", "type": "uint16" },
+          { "internalType": "address", "name": "vault", "type": "address" },
+          {
+            "internalType": "uint128",
+            "name": "sqrtPriceLimitX96",
+            "type": "uint128"
+          }
+        ],
+        "internalType": "struct AutoSavingToVault.Config",
+        "name": "config",
+        "type": "tuple"
+      }
+    ],
+    "name": "setConfig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "destinationContract",
+        "type": "address"
+      },
+      { "internalType": "uint256", "name": "callValue", "type": "uint256" },
+      { "internalType": "bytes", "name": "callData", "type": "bytes" },
+      { "internalType": "bytes", "name": "_sessionKeyData", "type": "bytes" },
+      { "internalType": "bytes", "name": "", "type": "bytes" }
+    ],
+    "name": "validateSessionParams",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "version",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]
