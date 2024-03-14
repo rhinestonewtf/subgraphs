@@ -14,6 +14,10 @@
     "ScheduledTransfers": {
       "address": "0xAd6330089d9a1fe89f4020292E1aFE9969a5A2Fc",
       "startBlock": 5368094
+    },
+    "AutoSavings": {
+      "address": "0x9fc07B42B4e13cBeA040F4f3F80223C9aDf4005E",
+      "startBlock": 5368094
     }
   }
 }

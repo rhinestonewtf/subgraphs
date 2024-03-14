@@ -100,3 +100,23 @@ dataSources:
         - event: ExecutionsCancelled(indexed address)
           handler: handleExecutionsCancelled
       file: ./src/scheduled-transfers.ts
+  - kind: ethereum
+    name: AutoSavings
+    network: sepolia
+    source:
+      address: "0x9fc07B42B4e13cBeA040F4f3F80223C9aDf4005E"
+      abi: AutoSavings
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AutoSaveExecuted
+      abis:
+        - name: AutoSavings
+          file: ./abis/AutoSavings.json
+      eventHandlers:
+        - event: AutoSaveExecuted(indexed address,indexed address,uint256)
+          handler: handleAutoSaveExecuted
+      file: ./src/auto-savings.ts
