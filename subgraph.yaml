@@ -120,3 +120,26 @@ dataSources:
         - event: AutoSaveExecuted(indexed address,indexed address,uint256)
           handler: handleAutoSaveExecuted
       file: ./src/auto-savings.ts
+  - kind: ethereum
+    name: SmartAccount
+    network: sepolia
+    source:
+      abi: SmartAccount
+      startBlock: 5627976
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ModuleInstalled
+        - ModuleUninstalled
+        - TryExecuteUnsuccessful
+      abis:
+        - name: SmartAccount
+          file: ./abis/SmartAccount.json
+      eventHandlers:
+        - event: ModuleInstalled(uint256,address)
+          handler: handleModuleInstalled
+        - event: ModuleUninstalled(uint256,address)
+          handler: handleModuleUninstalled
+      file: ./src/smart-account.ts

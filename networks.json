@@ -18,6 +18,9 @@
     "AutoSavings": {
       "address": "0x9fc07B42B4e13cBeA040F4f3F80223C9aDf4005E",
       "startBlock": 5368094
+    },
+    "SmartAccount": {
+      "startBlock": 5368094
     }
   }
 }
