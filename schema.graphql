@@ -182,3 +182,34 @@ type AutoSaveExecuted @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+# SmartAccount entities
+
+type ModuleInstalled @entity(immutable: true) {
+  id: Bytes!
+  moduleTypeId: BigInt! # uint256
+  module: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ModuleUninstalled @entity(immutable: true) {
+  id: Bytes!
+  moduleTypeId: BigInt! # uint256
+  module: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ModuleQuery @entity {
+  id: Bytes!
+  moduleTypeId: BigInt! # uint256
+  module: Bytes! # address
+  smartAccount: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+  isInstalled: Boolean!
+}
