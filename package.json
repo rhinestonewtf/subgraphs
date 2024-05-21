@@ -1,6 +1,12 @@
 {
-  "name": "subgraph-rhinestone",
-  "license": "UNLICENSED",
+  "name": "@rhinestone/subgraphs",
+  "version": "0.0.1",
+  "description": "Subgraphs used by the Rhinestone Infrastructure",
+  "license": "MIT",
+  "author": {
+    "name": "Rhinestone",
+    "url": "https://rhinestone.wtf"
+  },
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
@@ -16,5 +22,22 @@
   },
   "devDependencies": {
     "matchstick-as": "0.5.0"
+  },
+  "homepage": "https://github.com/rhinestonewtf/subgraphs#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rhinestonewtf/subgraphs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinestonewtf/subgraphs/issues"
+  },
+  "keywords": [
+    "account abstraction",
+    "smart account modules",
+    "erc4337",
+    "subgraphs"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }
