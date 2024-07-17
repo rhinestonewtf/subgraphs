@@ -1,7 +1,8 @@
 {
   "sepolia": {
     "Registry": {
-      "address": "0x500684cBaa280aDf80d5ACf7A32Daebb23162e63"
+      "address": "0xe0cde9239d16bEf05e62Bbf7aA93e420f464c826",
+      "startBlock": 5368094
     },
     "VirtualColdStorage": {
       "address": "0xDFE507Ad4035256E586f9e8B7d0e82184d5b8cb4",

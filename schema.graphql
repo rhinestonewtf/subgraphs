@@ -166,6 +166,38 @@ type ScheduledTransfersExecutionTriggeredQuery @entity {
   transactionHash: Bytes!
 }
 
+type ScheduledOrdersExecutionAddedQuery @entity {
+  id: Bytes!
+  smartAccount: Bytes! # address
+  jobId: BigInt! # uint256
+  executeInterval: BigInt!
+  numberOfExecutions: BigInt!
+  numberOfExecutionsCompleted: BigInt!
+  startDate: BigInt!
+  isEnabled: Boolean!
+  blockNumber: BigInt!
+  lastExecutionTime: BigInt!
+  executionData: Bytes!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ScheduledOrdersExecutionTriggeredQuery @entity {
+  id: Bytes!
+  smartAccount: Bytes! # address
+  jobId: BigInt! # uint256
+  executeInterval: BigInt!
+  numberOfExecutions: BigInt!
+  numberOfExecutionsCompleted: BigInt!
+  startDate: BigInt!
+  isEnabled: Boolean!
+  blockNumber: BigInt!
+  lastExecutionTime: BigInt!
+  executionData: Bytes!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
 type ExecutionsCancelled @entity(immutable: true) {
   id: Bytes!
   smartAccount: Bytes! # address
