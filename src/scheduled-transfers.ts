@@ -14,7 +14,6 @@ import {
   ScheduledTransfersExecutionAddedQuery,
   ScheduledTransfersExecutionTriggeredQuery,
 } from "../generated/schema";
-import { store, log } from "@graphprotocol/graph-ts";
 
 export function handleExecutionAdded(event: ExecutionAddedEvent): void {
   let entity = new ExecutionAdded(

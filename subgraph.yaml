@@ -6,7 +6,7 @@ dataSources:
     name: Registry
     network: sepolia
     source:
-      address: "0x500684cBaa280aDf80d5ACf7A32Daebb23162e63"
+      address: "0xe0cde9239d16bEf05e62Bbf7aA93e420f464c826"
       abi: Registry
     mapping:
       kind: ethereum/events
@@ -125,7 +125,7 @@ dataSources:
     network: sepolia
     source:
       abi: SmartAccount
-      startBlock: 5627976
+      startBlock: 5016208
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
